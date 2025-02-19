@@ -34,15 +34,29 @@ javascript:(function(){
 		disp.after(user_reward_p);
 		// user_reward_p.style.margin = "0";
 		user_reward_p.classList.add("user_reward");
+		
+		const test_bet_div = document.createElement("div");
+		// test_bet_div.innerHTML = "お試し";
+		chars[i].prepend(test_bet_div);
 		const test_bet_p = document.createElement("p");
-		test_bet_p.innerHTML = "お試しBET";
+		test_bet_p.innerHTML = "+BET";
 		test_bet_p.style.border = "solid 1px #000";
 		test_bet_p.style.backgroundColor = "#C3C3C3";
 		test_bet_p.style.color = "#000";
 		test_bet_p.style.cursor = "pointer";
 		test_bet_p.style.display = "inline-block";
-		test_bet_p.style.margin = "0";
-		chars[i].prepend(test_bet_p);
+		test_bet_p.style.margin = "2px";
+		test_bet_div.appendChild(test_bet_p);
+		const test_bet_rm = document.createElement("p");
+		test_bet_rm.innerHTML = "-BET";
+		test_bet_rm.style.border = "solid 1px #000";
+		test_bet_rm.style.backgroundColor = "#C3C3C3";
+		test_bet_rm.style.color = "#000";
+		test_bet_rm.style.cursor = "pointer";
+		test_bet_rm.style.display = "inline-block";
+		test_bet_rm.style.margin = "2px";
+		test_bet_div.appendChild(test_bet_rm);
+
 		const index = i;
 		test_bet_p.addEventListener("click", () => {
 			const tb = document.createElement("font");
@@ -51,30 +65,30 @@ javascript:(function(){
 			if(ratio==4) bet_value = 30;
 			tb.innerHTML = "お試し " + bet_value + "枚<br>";
 			tb.color = "#0a6";
+			tb.classList.add("test_bet");
 			chars[index].appendChild(tb);
-			// calculate();
-			// let alone = 1;
-			// if(char_bet[index]==1 || char_bet_user[index].length==1) alone = 1.2;
-			// const test_reward_p = chars[index].getElementsByClassName("user_reward")[0];
-			// const test_reward = users["お試し"][index] * (Math.floor(sum/char_bet[index])*ratio*alone + Math.floor(pot/char_bet[index]));
-			// chars[index].style.backgroundColor = "rgba(181,230,29,0.25)";
-			// chars[index].style.boxShadow = "0 0 5px #000";
-			// test_reward_p.innerHTML = "お試し BET:<b>" + users["お試し"][index] + "</b><br>賞金:<b>" + test_reward + "</b>枚";
-			// const b = chars[index].getElementsByTagName("b");
-			// for(j=0;j<b.length;j++){
-			// 	const hp = b[j].innerHTML.match(/^0<br>$/);
-			// 	if(hp!=null){
-			// 		chars[index].style.backgroundColor = "rgba(0,0,0,0.25)";
-			// 		const imgs = chars[index].getElementsByTagName("img");
-			// 		imgs[0].style.opacity = 0.5;
-			// 	}
-			// }
 			update();
+		});
+
+		test_bet_rm.addEventListener("click", () => {
+			const tbs = chars[index].getElementsByClassName("test_bet");
+			if(tbs.length!=0){
+				chars[index].removeChild(tbs[0]);
+				update();
+			}
 		});
 	}
 
+	const display_box = document.createElement("div");
+	box.appendChild(display_box);
 	const display = document.createElement("p");
-	box.appendChild(display);
+	display.style.display = "inline-block";
+	display.style.margin = "20px";
+	display_box.appendChild(display);
+	const display2 = document.createElement("p");
+	display2.style.display = "inline-block";
+	display2.style.margin = "20px";
+	display_box.appendChild(display2);
 
 	const calculate = () => {
 		sum = 0;
@@ -99,12 +113,13 @@ javascript:(function(){
 			if(chars.length!=char_state.length){
 				char_state.push({light:0,die:0,testBet:0,select:0});
 			}
-			console.log(char_state);
+			// console.log(char_state);
 
 			for(const name in users){
 				users[name][i] = 0;
 			}
 
+			char_state[i]["testBet"] = 0;
 			for(j=1;j<f.length;j++){
 				const be = f[j].innerHTML.match(/\d+枚/g);
 				let bet;
@@ -150,7 +165,7 @@ javascript:(function(){
 					}
 				}
 			}
-			console.log(char_bet_user);
+			// console.log(char_bet_user);
 		}
 	};
 
@@ -162,6 +177,8 @@ javascript:(function(){
 		}else{pot = 0;}
 
 		display.innerHTML = "全体BET:" + bets + "<br>全体BET額:" + sum + "枚<br>BET賞金総額:" + sum + "×" + ratio + "+" + pot + "=" + (sum*ratio+pot) + "枚";
+		
+
 
 		char_state.forEach((char) => {
 			char["light"] = 0;
@@ -170,15 +187,15 @@ javascript:(function(){
 		let pushed_name_i = undefined;
 
 		for(i=0;i<button_state.length;i++){
-			console.log(button_state);
-			console.log(button_state[i]["push"]);
+			// console.log(button_state);
+			// console.log(button_state[i]["push"]);
 			switch(button_state[i]["push"]){
 				case 0:
-					console.log("case:0");
+					// console.log("case:0");
 					buttons[i].style.backgroundColor = "#C3C3C3";
 					break;
 				case 1:
-					console.log("case:1");
+					// console.log("case:1");
 					buttons[i].style.backgroundColor = "#7F7F7F";
 					pushed_name_i = i;
 					break;
@@ -276,6 +293,24 @@ javascript:(function(){
 
 			// }
 		}
+
+		let tb_num = 0;
+		if(users["お試し"]!=undefined){
+			test_bet = 0;
+			users["お試し"].forEach((tb) => {
+				let bet_value = 300;
+				if(ratio==2) bet_value = 1000;
+				if(ratio==4) bet_value = 30;
+				test_bet += tb*bet_value;
+				tb_num += tb;
+			});
+		}
+		if(tb_num!=0){
+			display2.innerHTML = "お試しBET:<b>" + tb_num + "</b><br>お試しBET額:<b>" + test_bet + "</b>枚";
+		}else{
+			display2.innerHTML = "";
+		}
+		
 	};
 
 	update();
@@ -307,7 +342,7 @@ javascript:(function(){
 		button.addEventListener("click", () => {
 			if(button_state[index]["push"]!=1){
 				button_state.forEach((state,ind) => {
-					console.log(button_state[ind]["push"]);
+					// console.log(button_state[ind]["push"]);
 					if(button_state[ind]["push"]==1)button_state[ind]["push"] = 0;
 				});
 				button_state[index]["push"] = 1;
