@@ -46,6 +46,7 @@ javascript:(function(){
 		test_bet_p.style.cursor = "pointer";
 		test_bet_p.style.display = "inline-block";
 		test_bet_p.style.margin = "2px";
+		test_bet_p.style.userSelect = "none";
 		test_bet_div.appendChild(test_bet_p);
 		const test_bet_rm = document.createElement("p");
 		test_bet_rm.innerHTML = "-BET";
@@ -55,6 +56,7 @@ javascript:(function(){
 		test_bet_rm.style.cursor = "pointer";
 		test_bet_rm.style.display = "inline-block";
 		test_bet_rm.style.margin = "2px";
+		test_bet_rm.style.userSelect = "none";
 		test_bet_div.appendChild(test_bet_rm);
 
 		const index = i;
