@@ -489,9 +489,7 @@ javascript:(function(){
 			let isDie = true;
 			for(j=0;j<users[buttons[i].innerHTML].length;j++){
 				if(users[buttons[i].innerHTML][j]!=0){
-					console.log(chars[j].innerHTML);
 					const hpb = chars[j].innerHTML.match(/HP <b>\d*<br><[/]b>/);
-					console.log(hpb);
 					if(hpb!=null){
 						let hp = hpb[0].replace(/HP <b>/, "").replace(/<br><[/]b>/, "");
 						hp = parseInt(hp);
