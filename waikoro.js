@@ -533,20 +533,19 @@ javascript:(function(){
 				tb_num += tb;
 			});
 		}
-		if(buttons.length!=0){
-			if(pushed_name_i!=undefined){
-				const name = buttons[pushed_name_i].innerHTML;
-				if(tb_num!=0){
-					tb_display[1].innerHTML = name +  " BET: <b>" + user_bet[name] + "</b>+<b><span style='color:#22B14C;'>" + tb_num + "</span></b><br>" + name + " BET額: <b><span style='color:#22B14C;'>" + (user_sum[name]+test_bet) + "</span></b>枚";
-				}else{
-					tb_display[1].innerHTML = name +  " BET: <b>" + user_bet[name] + "</b><br>" + name + " BET額: <b>" + user_sum[name] + "</b>枚";
-				}
+
+		if(pushed_name_i!=undefined){
+			const name = buttons[pushed_name_i].innerHTML;
+			if(tb_num!=0){
+				tb_display[1].innerHTML = name +  " BET: <b>" + user_bet[name] + "</b>+<b><span style='color:#22B14C;'>" + tb_num + "</span></b><br>" + name + " BET額: <b><span style='color:#22B14C;'>" + (user_sum[name]+test_bet) + "</span></b>枚";
 			}else{
-				if(tb_num!=0){
-					tb_display[1].innerHTML = "お試しBET: <b><span style='color:#22B14C;'>" + tb_num + "</span></b><br>お試しBET額: <b><span style='color:#22B14C;'>" + test_bet + "</span></b>枚";
-				}else{
-					tb_display[1].innerHTML = "";
-				}
+				tb_display[1].innerHTML = name +  " BET: <b>" + user_bet[name] + "</b><br>" + name + " BET額: <b>" + user_sum[name] + "</b>枚";
+			}
+		}else{
+			if(tb_num!=0){
+				tb_display[1].innerHTML = "お試しBET: <b><span style='color:#22B14C;'>" + tb_num + "</span></b><br>お試しBET額: <b><span style='color:#22B14C;'>" + test_bet + "</span></b>枚";
+			}else{
+				tb_display[1].innerHTML = "";
 			}
 		}
 	};
